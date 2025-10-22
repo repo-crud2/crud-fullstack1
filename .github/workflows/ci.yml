@@ -1,5 +1,4 @@
 name: CI
-
 on:
   pull_request:
     branches: [develop, main]
@@ -11,20 +10,16 @@ permissions:
 
 jobs:
   ci:
-    name: ci
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
       - name: Use Node
         uses: actions/setup-node@v4
         with:
-          node-version: 20
-          cache: npm
+          node-version: 20   # cache dimatikan sampai ada lockfile
 
-      - name: Install deps (lockfile-aware)
+      - name: Install deps
         run: |
           if [ -f package-lock.json ]; then
             npm ci
@@ -35,13 +30,13 @@ jobs:
       - name: Lint
         run: npm run lint --if-present
 
-      - name: Unit test
+      - name: Test
         run: npm test --if-present -- --ci --reporters=default --watchAll=false
 
       - name: Build
         run: npm run build
 
-      - name: Upload artifact (dist/.next/build)
+      - name: Upload artifact
         if: ${{ always() }}
         uses: actions/upload-artifact@v4
         with:
