@@ -1,0 +1,17 @@
+name: CI (placeholder)
+
+on:
+  push:
+    branches: [develop, main]
+  pull_request:
+    branches: [develop, main]
+
+jobs:
+  placeholder:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Placeholder check
+        run: echo "✅ Repo masih kosong, CI jalan normal (belum ada build)"
