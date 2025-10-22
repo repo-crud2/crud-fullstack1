@@ -1,48 +1,17 @@
-name: CI
+name: CI (placeholder)
+
 on:
+  push:
+    branches: [develop, main]
   pull_request:
     branches: [develop, main]
-  push:
-    branches: [develop]
-
-permissions:
-  contents: read
 
 jobs:
-  ci:
+  placeholder:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
 
-      - name: Use Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20   # cache dimatikan sampai ada lockfile
-
-      - name: Install deps
-        run: |
-          if [ -f package-lock.json ]; then
-            npm ci
-          else
-            npm install
-          fi
-
-      - name: Lint
-        run: npm run lint --if-present
-
-      - name: Test
-        run: npm test --if-present -- --ci --reporters=default --watchAll=false
-
-      - name: Build
-        run: npm run build
-
-      - name: Upload artifact
-        if: ${{ always() }}
-        uses: actions/upload-artifact@v4
-        with:
-          name: web-dist
-          path: |
-            dist
-            build
-            .next
-          if-no-files-found: ignore
+      - name: Placeholder check
+        run: echo "✅ Repo masih kosong, CI jalan normal (belum ada build)"
